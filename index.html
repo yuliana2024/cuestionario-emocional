@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test para Evaluar Estados Emocionales</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; padding: 20px; background-color: #f4f4f9; }
+        h1, h2 { color: #333; }
+        .question { margin-bottom: 15px; }
+        .result { margin-top: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Test para Evaluar los Estados Emocionales (TMMS-24)</h1>
+    <form id="emotionalTest">
+        <p>Indique su grado de acuerdo con cada afirmación (1: Nada de acuerdo - 5: Totalmente de acuerdo):</p>
+
+        <div id="questions"></div>
+
+        <button type="button" onclick="calcularResultados()">Obtener Resultados</button>
+    </form>
+
+    <div class="result" id="result"></div>
+
+    <script>
+        const preguntas = [
+            "Presto mucha atención a los sentimientos.",
+            "Normalmente me preocupo mucho por lo que siento.",
+            "Normalmente dedico tiempo a pensar en mis emociones.",
+            "Pienso que merece la pena prestar atención a mis emociones y estado de ánimo.",
+            "Dejo que mis sentimientos afecten a mis pensamientos.",
+            "Pienso en mi estado de ánimo constantemente.",
+            "A menudo pienso en mis sentimientos.",
+            "Presto mucha atención a cómo me siento.",
+            "Tengo claros mis sentimientos.",
+            "Frecuentemente puedo definir mis sentimientos.",
+            "Casi siempre sé cómo me siento.",
+            "Normalmente conozco mis sentimientos sobre las personas.",
+            "A menudo me doy cuenta de mis sentimientos en diferentes situaciones.",
+            "Siempre puedo decir cómo me siento.",
+            "A veces puedo decir cuáles son mis emociones.",
+            "Puedo llegar a comprender mis sentimientos.",
+            "Aunque a veces me siento triste, suelo tener una visión optimista.",
+            "Aunque me sienta mal, procuro pensar en cosas agradables.",
+            "Cuando estoy triste, pienso en todos los placeres de la vida.",
+            "Intento tener pensamientos positivos aunque me sienta mal.",
+            "Si doy demasiadas vueltas a las cosas, complicándolas, trato de calmarme.",
+            "Me preocupo por tener un buen estado de ánimo.",
+            "Tengo mucha energía cuando me siento feliz.",
+            "Cuando estoy enfadado intento cambiar mi estado de ánimo."
+        ];
+
+        const contenedorPreguntas = document.getElementById("questions");
+        preguntas.forEach((pregunta, i) => {
+            const div = document.createElement("div");
+            div.classList.add("question");
+            div.innerHTML = `<label>${i + 1}. ${pregunta}</label><br>
+                <input type="radio" name="p${i}" value="1"> 1
+                <input type="radio" name="p${i}" value="2"> 2
+                <input type="radio" name="p${i}" value="3"> 3
+                <input type="radio" name="p${i}" value="4"> 4
+                <input type="radio" name="p${i}" value="5"> 5`;
+            contenedorPreguntas.appendChild(div);
+        });
+
+        function calcularResultados() {
+            let percepcion = 0, comprension = 0, regulacion = 0;
+            for (let i = 0; i < 8; i++) percepcion += parseInt(document.querySelector(`input[name="p${i}"]:checked`)?.value || 0);
+            for (let i = 8; i < 16; i++) comprension += parseInt(document.querySelector(`input[name="p${i}"]:checked`)?.value || 0);
+            for (let i = 16; i < 24; i++) regulacion += parseInt(document.querySelector(`input[name="p${i}"]:checked`)?.value || 0);
+
+            document.getElementById("result").innerText = `Resultados:
+- Percepción: ${percepcion}
+- Comprensión: ${comprension}
+- Regulación: ${regulacion}`;
+        }
+    </script>
+</body>
+</html>
